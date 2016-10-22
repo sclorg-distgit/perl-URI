@@ -2,7 +2,7 @@
 
 Name:           %{?scl_prefix}perl-URI
 Version:        1.71
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A Perl module implementing URI parsing and manipulation
 Group:          Development/Libraries
 License:        GPL+ or Artistic
@@ -89,6 +89,9 @@ chmod -c 644 uri-test
 %{_mandir}/man3/URI::ldap.3*
 
 %changelog
+* Sun Jul 24 2016 Petr Pisar <ppisar@redhat.com> - 1.71-6
+- Rebuild without bootstrap
+
 * Tue Jul 19 2016 Petr Pisar <ppisar@redhat.com> - 1.71-5
 - SCL
 
