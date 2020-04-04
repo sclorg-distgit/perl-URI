@@ -9,7 +9,7 @@
 
 Name:           %{?scl_prefix}perl-URI
 Version:        1.76
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        A Perl module implementing URI parsing and manipulation
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/URI
@@ -20,6 +20,7 @@ BuildRequires:  coreutils
 BuildRequires:  make
 BuildRequires:  %{?scl_prefix}perl-generators
 BuildRequires:  %{?scl_prefix}perl-interpreter
+BuildRequires:  %{?scl_prefix}perl(Config)
 BuildRequires:  %{?scl_prefix}perl(ExtUtils::MakeMaker) >= 6.76
 # Module Runtime
 BuildRequires:  %{?scl_prefix}perl(Carp)
@@ -38,7 +39,6 @@ BuildRequires:  %{?scl_prefix}perl(strict)
 BuildRequires:  %{?scl_prefix}perl(utf8)
 BuildRequires:  %{?scl_prefix}perl(warnings)
 # Test Suite
-BuildRequires:  %{?scl_prefix}perl(Config)
 BuildRequires:  %{?scl_prefix}perl(File::Spec)
 BuildRequires:  %{?scl_prefix}perl(File::Spec::Functions)
 BuildRequires:  %{?scl_prefix}perl(File::Temp)
@@ -73,6 +73,7 @@ updated by RFC 2732).
 %prep
 %setup -q -n URI-%{version}
 chmod -c 644 uri-test
+%{?scl:scl enable %{scl} '}perl -MConfig -i -pe %{?scl:'"}'%{?scl:"'}s{^#!/usr/bin/perl}{$Config{startperl}}%{?scl:'"}'%{?scl:"'} uri-test%{?scl:'}
 
 %build
 %{?scl:scl enable %{scl} '}perl Makefile.PL INSTALLDIRS=perl NO_PACKLIST=true NO_PERLLOCAL=true && make %{?_smp_mflags}%{?scl:'}
@@ -102,6 +103,9 @@ chmod -c 644 uri-test
 %{_mandir}/man3/URI::ldap.3*
 
 %changelog
+* Tue Mar 17 2020 Petr Pisar <ppisar@redhat.com> - 1.76-7
+- Normalize a shebang in an uri-test example (bug #1813358)
+
 * Mon Jan 06 2020 Jitka Plesnikova <jplesnik@redhat.com> - 1.76-6
 - SCL
 
